@@ -1,4 +1,4 @@
-# 源码debug方法
+# Flink 源码debug方法
 - Flink是开源的，代码托管在Github上，可以选择一个合适的版本将Flink源码clone下来。也可以直接从Flink官网上下载下来，链接http://flink.apache.org/downloads.html#source。Flink源码的组成结构清晰明了，每个分包的功能见名知意。
 
 编译源码：mvn clean install -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true
