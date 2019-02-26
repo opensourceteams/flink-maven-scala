@@ -3,7 +3,15 @@
 jar tvf test.jar 
 
 ```
+### 执行计划图
+- 地址:https://flink.apache.org/visualizer
 
+```aidl
+      //执行计划
+      //println(env.getExecutionPlan)
+      //StreamGraph
+     //println(env.getStreamGraph.getStreamingPlanAsJSON)
+```
 
 ### 运行 jar 到 Flink 集群
 ```aidl
