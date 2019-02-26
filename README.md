@@ -80,5 +80,5 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 
 
 ### Flink 源码分析
-- 客户端提交程序到MiniCluster: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/001-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8F%90%E4%BA%A4%E7%A8%8B%E5%BA%8F%E5%88%B0MiniCluster.png
-- ExecutionGraph的构建和Execution.deploy: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/002-ExecutionGraph%E6%9E%84%E5%BB%BA%E5%92%8C%E4%BD%9C%E4%B8%9A%E8%BF%90%E8%A1%8C.png
+- 客户端提交程序到MiniCluster(时序图): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/001-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8F%90%E4%BA%A4%E7%A8%8B%E5%BA%8F%E5%88%B0MiniCluster.png
+- ExecutionGraph的构建和Execution.deploy(时序图): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/002-ExecutionGraph%E6%9E%84%E5%BB%BA%E5%92%8C%E4%BD%9C%E4%B8%9A%E8%BF%90%E8%A1%8C.png
