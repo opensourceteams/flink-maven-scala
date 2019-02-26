@@ -71,3 +71,8 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 
 ### Flink MiniCluster 作业提交
 - https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/MiniCluster-job-submit.md
+
+
+
+### Flink 名词术语
+- https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-concept.md
