@@ -65,7 +65,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 
 ```
 
-### scala 版Flink WordCount单词统计
+### scala 版Flink WordCount单词统计 
 - https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/wordCount-scala.md
 
 
