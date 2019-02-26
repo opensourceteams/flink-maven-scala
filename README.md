@@ -75,7 +75,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 
 
 ### Flink 名词术语
-- https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-concept.md
+- https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/flink-concept.md
 
 
 
