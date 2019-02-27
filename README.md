@@ -1,3 +1,7 @@
+## 技术交流
+- 微信:thinktothings
+- 微博:https://weibo.com/thinktothings
+
 ###  查看jar中文件列表
 ```aidl
 jar tvf test.jar 
