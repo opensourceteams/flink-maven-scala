@@ -43,11 +43,16 @@ object SocketWindowWordCountLocal {
     val textResult = dataStream.flatMap( w => w.split("\\s") ).map( w => WordWithCount(w,1))
       .keyBy("word")
       /**
-        * 每5秒刷新一次，相当于重新开始计数，
+        * 每20秒刷新一次，相当于重新开始计数，
         * 好处，不需要一直拿所有的数据统计
         * 只需要在指定时间间隔内的增量数据，减少了数据规模
         */
-      .timeWindow(Time.seconds(3))
+      .timeWindow(Time.seconds(20))
+      //.countWindow(3)
+      //.countWindow(3,1)
+      //.countWindowAll(3)
+
+
       .sum("count" )
 
     textResult.print().setParallelism(1)
