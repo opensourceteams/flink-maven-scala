@@ -7,7 +7,7 @@
 
 ### 时序图
 - https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/005-source-operation-sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.png
-![https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/005-source-operation-sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.png]
+![](https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/005-source-operation-sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.png)
 ### 输入数据
 - nc -lk 1234
 ```
