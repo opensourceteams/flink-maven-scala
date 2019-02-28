@@ -103,3 +103,4 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - ExecutionGraph的构建和Execution.deploy之前(时序图): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/002-ExecutionGraph%E6%9E%84%E5%BB%BA%E5%92%8C%E4%BD%9C%E4%B8%9A%E8%BF%90%E8%A1%8C.png
 - Execution deploy和source数据读取(时序图): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/003-execution-deploy-source%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96.png
 - OperatorChian计算source数据(时序图): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/004_operatorChain_%E8%AE%A1%E7%AE%97source%E6%95%B0%E6%8D%AE.png
+- 005-source-operation-sink源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/005-source-operation-sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.png
