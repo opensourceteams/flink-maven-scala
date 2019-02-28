@@ -81,7 +81,22 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 ### Flink 名词术语
 - https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/flink-concept.md
 
+## 执行计划
+- 用Firefox 打开，显示的比较全
+- https://flink.apache.org/visualizer
 
+### Execute Plan
+```aidl
+{"nodes":[{"id":1,"type":"Source: Socket Stream","pact":"Data Source","contents":"Source: Socket Stream","parallelism":1},{"id":2,"type":"Flat Map","pact":"Operator","contents":"Flat Map","parallelism":1,"predecessors":[{"id":1,"ship_strategy":"FORWARD","side":"second"}]},{"id":3,"type":"Map","pact":"Operator","contents":"Map","parallelism":1,"predecessors":[{"id":2,"ship_strategy":"FORWARD","side":"second"}]},{"id":5,"type":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","pact":"Operator","contents":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","parallelism":1,"predecessors":[{"id":3,"ship_strategy":"HASH","side":"second"}]},{"id":6,"type":"Sink: Print to Std. Out","pact":"Data Sink","contents":"Sink: Print to Std. Out","parallelism":1,"predecessors":[{"id":5,"ship_strategy":"FORWARD","side":"second"}]}]}
+
+
+```
+
+### StreamGraph Plan
+```aidl
+{"nodes":[{"id":1,"type":"Source: Socket Stream","pact":"Data Source","contents":"Source: Socket Stream","parallelism":1},{"id":2,"type":"Flat Map","pact":"Operator","contents":"Flat Map","parallelism":1,"predecessors":[{"id":1,"ship_strategy":"FORWARD","side":"second"}]},{"id":3,"type":"Map","pact":"Operator","contents":"Map","parallelism":1,"predecessors":[{"id":2,"ship_strategy":"FORWARD","side":"second"}]},{"id":5,"type":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","pact":"Operator","contents":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","parallelism":1,"predecessors":[{"id":3,"ship_strategy":"HASH","side":"second"}]},{"id":6,"type":"Sink: Print to Std. Out","pact":"Data Sink","contents":"Sink: Print to Std. Out","parallelism":1,"predecessors":[{"id":5,"ship_strategy":"FORWARD","side":"second"}]}]}
+
+```
 
 ### Flink 源码分析
 - 客户端提交程序到MiniCluster(时序图): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/001-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8F%90%E4%BA%A4%E7%A8%8B%E5%BA%8F%E5%88%B0MiniCluster.png

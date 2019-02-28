@@ -1,5 +1,6 @@
 # Flink 名词述语
 
+
 ## Scheduling(调度)
 
 ###  JobSchedulingStatus(作业调度状态)
@@ -26,6 +27,10 @@
 
 	// ----------
 ```
+
+
+## Window
+- Window 机制: http://wuchong.me/blog/2016/05/25/flink-internals-window-mechanism
 ## Graph 图
 ###  StreamGraph
 - StreamGraph：根据用户通过 Stream API 编写的代码生成的最初的图。

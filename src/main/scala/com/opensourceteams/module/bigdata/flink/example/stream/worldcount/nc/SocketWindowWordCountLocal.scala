@@ -56,10 +56,13 @@ object SocketWindowWordCountLocal {
 
     if(args == null || args.size ==0){
       env.execute("默认作业")
+
       //执行计划
       //println(env.getExecutionPlan)
       //StreamGraph
      //println(env.getStreamGraph.getStreamingPlanAsJSON)
+
+
 
       //JsonPlanGenerator.generatePlan(jobGraph)
 
