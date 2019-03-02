@@ -1,13 +1,27 @@
 # Sink 接收数据的顺序(Window发送数据顺序)
 
 ## 概述
+- InternalTimerServiceImpl.processingTimeTimersQueue存储着同一个Window中所有Key,取第一个key，调用WindowOperator.onProcessingTime进行处理,并发送给Sink
+- InternalTimerServiceImpl.processingTimeTimersQueue key处理的顺序是，先处理第一个，然后依次把最后一个元素放到第一个元素进行处理
+- Key,处理的顺序，如 1 2 1 3 2 4 5,就会变成
+
+   ```aidl
+    1
+    5
+    4
+    3
+    2
+   ```
+
+
+
 
 ## 输入数据
 ```aidl
 1 2 1 3 2 4 5
 ```
 
-## 原理分析
+
 
 
 ## 源码分析
