@@ -1,5 +1,10 @@
 # Flink Window 排序
 
+## 概述
+- 对增量Window进行输出排序
+- WordCount增量(按单词名称排序)
+- WordCount增量(按单词个数，再单词名称排序)
+
 ## 源码
 - https://github.com/opensourceteams/fink-maven-scala-2
 
