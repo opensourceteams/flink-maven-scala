@@ -4,12 +4,7 @@
 - https://github.com/opensourceteams/fink-maven-scala-2
 
 
-## 输入数据
 
-```aidl
-1 2 1 5 3
-
-```
 ## 源码分析
 
 ### WordCount 程序(增量按单词升序排序)
@@ -183,6 +178,23 @@ object SocketWindowWordCountLocalSinkHDFSAndWindowAllAndSorted {
 
 ```
 
+### 输入数据
+
+```aidl
+1 2 1 5 3
+
+```
+
+### 输出数据
+
+```aidl
+WordWithCount(1,2)
+WordWithCount(2,1)
+WordWithCount(3,1)
+WordWithCount(5,1)
+
+
+```
 
 
 ### WordCount 程序(增量,按单词个数排序，个数相同，再按单词排序)
@@ -363,3 +375,20 @@ object SocketWindowWordCountLocalSinkHDFSAndWindowAllAndSortedByCount {
 
 ```
 
+### 输入数据
+
+```aidl
+1 1 2 4 4 3 2 1
+
+```
+
+### 输出数据
+
+```aidl
+
+WordWithCount(3,1)
+WordWithCount(2,2)
+WordWithCount(4,2)
+WordWithCount(1,3)
+
+```
