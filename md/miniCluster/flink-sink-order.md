@@ -7,8 +7,8 @@
 
    ```aidl
     1
-    5
     4
+    5
     3
     2
    ```
@@ -18,7 +18,7 @@
 
 ## 输入数据
 ```aidl
-1 2 1 3 2 4 5
+1 2 1 3 2 5 4
 ```
 
 
@@ -36,8 +36,8 @@
     WordWithCount(1,1)
     WordWithCount(3,1)
     WordWithCount(2,1)
-    WordWithCount(4,1)
     WordWithCount(5,1)
+    WordWithCount(4,1)   
     
     ```
 - WindowOperator.processElement会接收并处理    
@@ -223,12 +223,12 @@ public void processElement(StreamRecord<IN> element) throws Exception {
    最后一个就置为空，再循环处理所有数据，相当于处理完第一个元素，处后从最后一个元素开始处理，一直处理到完成,举例
    
    ```aidl
-   1 2 1 3 2 4 5
-   存为 1 2 3 4 5 
+   1 2 1 3 2 5 4
+   存为 1 2 3 5 4 
    顺序就变为
     1
-    5
     4
+    5
     3
     2
    ```
@@ -240,6 +240,8 @@ queue = {HeapPriorityQueueElement[129]@8184}
  1 = {TimerHeapInternalTimer@12441} "Timer{timestamp=1551505439999, key=(1), namespace=TimeWindow{start=1551505380000, end=1551505440000}}"
  2 = {TimerHeapInternalTimer@12442} "Timer{timestamp=1551505439999, key=(2), namespace=TimeWindow{start=1551505380000, end=1551505440000}}"
  3 = {TimerHeapInternalTimer@12443} "Timer{timestamp=1551505439999, key=(3), namespace=TimeWindow{start=1551505380000, end=1551505440000}}"
+ 5 = {TimerHeapInternalTimer@12443} "Timer{timestamp=1551505439999, key=(3), namespace=TimeWindow{start=1551505380000, end=1551505440000}}"
+ 4 = {TimerHeapInternalTimer@12443} "Timer{timestamp=1551505439999, key=(3), namespace=TimeWindow{start=1551505380000, end=1551505440000}}"
 
 ```  
 - 调用 WindowOperator.onProcessingTime(timer)处理当前key;
