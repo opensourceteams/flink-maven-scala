@@ -3,7 +3,7 @@
 ## 概述
 - InternalTimerServiceImpl.processingTimeTimersQueue存储着同一个Window中所有Key,取第一个key，调用WindowOperator.onProcessingTime进行处理,并发送给Sink
 - InternalTimerServiceImpl.processingTimeTimersQueue key处理的顺序是，先处理第一个，然后依次把最后一个元素放到第一个元素进行处理
-- Key,处理的顺序，如 1 2 1 3 2 4 5,就会变成
+- Key,处理的顺序，如 1 2 3 5 4,就会变成
 
    ```aidl
     1
