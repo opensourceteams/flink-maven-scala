@@ -1,4 +1,4 @@
-# Sink 接收数据的顺序(Window发送数据顺序)
+# Flink Sink 接收数据的顺序(Window发送数据顺序)
 
 ## 概述
 - InternalTimerServiceImpl.processingTimeTimersQueue存储着同一个Window中所有Key,取第一个key，调用WindowOperator.onProcessingTime进行处理,并发送给Sink
@@ -12,6 +12,7 @@
     3
     2
    ```
+- 源码: https://github.com/opensourceteams/fink-maven-scala-2   
 
 
 
