@@ -18,11 +18,7 @@ jar tvf test.jar
      //println(env.getStreamGraph.getStreamingPlanAsJSON)
 ```
 
-### 运行 jar 到 Flink 集群
-```aidl
- flink run -c  com.opensourceteams.module.bigdata.flink.example.stream.worldcount.nc.SocketWindowWordCount    ./flink-maven-scala-2-0.0.1.jar  
 
-```
 
 ### 创建flink java 项目
 ```aidl
@@ -74,9 +70,6 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/wordCount-scala.md
 
 
-### Flink MiniCluster 作业提交
-- https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/MiniCluster-job-submit.md
-
 
 
 ### Flink 名词术语
@@ -100,9 +93,11 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 ```
 
 ### Flink1.7.2 源码分析
+- Flink MiniCluster 作业提交: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/MiniCluster-job-submit.md
 - Flink1.7.2 local WordCount源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/flink-local-wordCount-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.md
 - Flink Sink 接收数据的顺序(Window发送数据顺序): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-sink-order.md
 - Flink Window 排序: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-window-order.md
+- Flink1.7.2  并行计算源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/Flink-Parallelism-Calculation.md
 
 ### Flink1.7.2 时序图
 - Flink 客户端提交程序到MiniCluster(时序图): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/001-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8F%90%E4%BA%A4%E7%A8%8B%E5%BA%8F%E5%88%B0MiniCluster.png

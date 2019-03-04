@@ -63,6 +63,7 @@
 
 
 ```
+
 ### WindowOperator.processElement(StreamRecord<IN> element)
 - WindowOperator.processElement,给每一个WordWithCount(1,1) 这样的元素分配window,也就是确认每一个元素属于哪一个窗口，因为需要对同一个窗口的相同key进行聚合操作  
     ```aidl
