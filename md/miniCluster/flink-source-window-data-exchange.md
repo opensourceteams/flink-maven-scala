@@ -4,7 +4,7 @@
 - https://github.com/opensourceteams/fink-maven-scala-2
 
 ## 概述
-- Source,如何按partition发射数据到对应的Window
+- Source如何按partition发射数据到对应的Window
 - Window 如何处理对应的Source发过来的对应的partition数据
 - 理解Flink 数据从Source到Window,上下游数据交换的过程
 
