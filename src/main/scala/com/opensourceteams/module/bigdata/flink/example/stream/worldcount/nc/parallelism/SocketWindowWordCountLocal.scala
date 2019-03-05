@@ -49,7 +49,7 @@ object SocketWindowWordCountLocal {
       .sum("count" )
 
     textResult
-      .setParallelism(100)
+      .setParallelism(3)
       .print()
 
 
@@ -61,10 +61,10 @@ object SocketWindowWordCountLocal {
       println("==================================以下为执行计划==================================")
       println("执行地址(firefox效果更好):https://flink.apache.org/visualizer")
       //执行计划
-      println(env.getExecutionPlan)
-      println("==================================以上为执行计划 JSON串==================================\n")
+      //println(env.getExecutionPlan)
+     // println("==================================以上为执行计划 JSON串==================================\n")
       //StreamGraph
-     //println(env.getStreamGraph.getStreamingPlanAsJSON)
+     println(env.getStreamGraph.getStreamingPlanAsJSON)
 
 
 
@@ -82,7 +82,9 @@ object SocketWindowWordCountLocal {
 
 
   // Data type for words with count
-  case class WordWithCount(word: String, count: Long)
+  case class WordWithCount(word: String, count: Long){
+    //override def toString: String = Thread.currentThread().getName + word + " : " + count
+  }
 
 
   def getConfiguration(isDebug:Boolean = false):Configuration = {
