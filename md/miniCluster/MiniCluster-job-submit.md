@@ -1,7 +1,7 @@
 # Flink MiniCluster 作业提交
 
 ## 程序源码
-- https://github.com/opensourceteams/fink-maven-scala
+- https://github.com/opensourceteams/flink-maven-scala
 
 ## 程序main函数WordCount
 - SocketWindowWordCount.scala 

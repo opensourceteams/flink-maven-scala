@@ -6,7 +6,7 @@
 - WordCount增量(按单词个数，再单词名称排序)
 
 ## 源码
-- https://github.com/opensourceteams/fink-maven-scala-2
+- https://github.com/opensourceteams/flink-maven-scala
 
 
 

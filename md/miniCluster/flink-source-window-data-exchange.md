@@ -1,7 +1,7 @@
 # Flink1.7.2  Source、Window数据交互源码分析
 
 ## 源码
-- https://github.com/opensourceteams/fink-maven-scala-2
+- https://github.com/opensourceteams/flink-maven-scala
 
 ## 概述
 - Source如何按partition发射数据到对应的Window

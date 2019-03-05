@@ -1,7 +1,7 @@
 # Flink1.7.2  并行计算源码分析
 
 ## 源码
-- 源码:https://github.com/opensourceteams/fink-maven-scala-2
+- 源码:https://github.com/opensourceteams/flink-maven-scala
 - Flink1.7.2 Source、Window数据交互源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-source-window-data-exchange.md
 
 ## 概述

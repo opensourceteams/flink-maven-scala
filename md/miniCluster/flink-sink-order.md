@@ -12,7 +12,7 @@
     3
     2
    ```
-- 源码: https://github.com/opensourceteams/fink-maven-scala-2   
+- 源码: https://github.com/opensourceteams/flink-maven-scala
 
 
 

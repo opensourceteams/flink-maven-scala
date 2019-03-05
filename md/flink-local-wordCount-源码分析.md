@@ -5,7 +5,7 @@
 - Flink 环境 local,版本 Flink.1.7.2
 - 用官网示例WordCount Scala程序分析源码
 - 本文从source、operator、sink三个方面详细分析源码实现
-- 源码: https://github.com/opensourceteams/fink-maven-scala-2
+- 源码: https://github.com/opensourceteams/flink-maven-scala
 
 ### 时序图
 - https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/005-source-operation-sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.png

@@ -1,7 +1,7 @@
 # Flink worldCount 体验Scala版本
 
 ## 源码
-- github: https://github.com/opensourceteams/fink-maven-scala
+- github: https://github.com/opensourceteams/flink-maven-scala
 
 
 ## 描述
