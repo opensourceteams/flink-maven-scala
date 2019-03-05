@@ -1,9 +1,10 @@
 # Flink1.7.2  并行计算源码分析
 
-
-
 ## 源码
-- https://github.com/opensourceteams/fink-maven-scala-2
+- 源码:https://github.com/opensourceteams/fink-maven-scala-2
+- Flink1.7.2 Source、Window数据交互源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-source-window-data-exchange.md
+
+
 
 ## 输入数据
 ```
@@ -15,20 +16,22 @@
 ### ExecutionGraph.scheduleEager
 
 - ExecutionGraph 调度
-- executionsToDeploy包括所有的(Source,Window,Sink),在这里设置的setParallelism()并行度为多少，就有多少个Window,本案例设置的为2，所以executionsToDeploy对象的数据如下
+- executionsToDeploy包括所有的(Source,Window,Sink),在这里设置的setParallelism()并行度为多少，就有多少个Window,本案例设置的为3，所以executionsToDeploy对象的数据如下
  
     - (Source: Socket Stream -> Flat Map -> Map (1/1))
-    - (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (2/2))
-    - (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (1/2))
+    -  (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (3/3))
+    - (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (2/3))
+    - (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (1/3))
     -  (Sink: Print to Std. Out (1/1))
 
     - 详细executionsToDeploy对象
     ```
-    result = {Arrays$ArrayList@5500}  size = 4
-     0 = {Execution@5594} "Attempt #0 (Source: Socket Stream -> Flat Map -> Map (1/1)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@5c45e1c9 - [SCHEDULED]"
-     1 = {Execution@5598} "Attempt #0 (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (2/2)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@2bd566bd - [SCHEDULED]"
-     2 = {Execution@5599} "Attempt #0 (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (1/2)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@49f76db1 - [SCHEDULED]"
-     3 = {Execution@5600} "Attempt #0 (Sink: Print to Std. Out (1/1)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@4f09853b - [SCHEDULED]"
+    executionsToDeploy = {Arrays$ArrayList@5323}  size = 5
+ 0 = {Execution@5324} "Attempt #0 (Source: Socket Stream -> Flat Map -> Map (1/1)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@22dc33b2 - [SCHEDULED]"
+ 1 = {Execution@5506} "Attempt #0 (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (3/3)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@8f216e4 - [SCHEDULED]"
+ 2 = {Execution@5507} "Attempt #0 (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (2/3)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@50ccca83 - [SCHEDULED]"
+ 3 = {Execution@5508} "Attempt #0 (Window(TumblingProcessingTimeWindows(5000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction) (1/3)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@243b4f41 - [SCHEDULED]"
+ 4 = {Execution@5509} "Attempt #0 (Sink: Print to Std. Out (1/1)) @ org.apache.flink.runtime.jobmaster.slotpool.SingleLogicalSlot@67b9a9d7 - [SCHEDULED]"
     ```
 - 源码
 - 调用Execution.deploy()进行部署
@@ -1716,7 +1719,115 @@ public void onProcessingTime(InternalTimer<K, W> timer) throws Exception {
 		}
 	}
 ```
-  
+
+
+### SingleInputGate  
+- 中间数据处理流程(数据交互)
+
+```
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.flink.runtime.io.network.partition.consumer;
+
+import org.apache.flink.api.common.JobID;
+import org.apache.flink.core.memory.MemorySegment;
+import org.apache.flink.runtime.deployment.InputChannelDeploymentDescriptor;
+import org.apache.flink.runtime.deployment.InputGateDeploymentDescriptor;
+import org.apache.flink.runtime.deployment.ResultPartitionLocation;
+import org.apache.flink.runtime.event.AbstractEvent;
+import org.apache.flink.runtime.event.TaskEvent;
+import org.apache.flink.runtime.executiongraph.ExecutionAttemptID;
+import org.apache.flink.runtime.io.network.NetworkEnvironment;
+import org.apache.flink.runtime.io.network.api.EndOfPartitionEvent;
+import org.apache.flink.runtime.io.network.api.serialization.EventSerializer;
+import org.apache.flink.runtime.io.network.buffer.Buffer;
+import org.apache.flink.runtime.io.network.buffer.BufferPool;
+import org.apache.flink.runtime.io.network.buffer.BufferProvider;
+import org.apache.flink.runtime.io.network.buffer.NetworkBufferPool;
+import org.apache.flink.runtime.io.network.partition.ResultPartitionID;
+import org.apache.flink.runtime.io.network.partition.ResultPartitionType;
+import org.apache.flink.runtime.io.network.partition.consumer.InputChannel.BufferAndAvailability;
+import org.apache.flink.runtime.jobgraph.DistributionPattern;
+import org.apache.flink.runtime.jobgraph.IntermediateDataSetID;
+import org.apache.flink.runtime.jobgraph.IntermediateResultPartitionID;
+import org.apache.flink.runtime.metrics.groups.TaskIOMetricGroup;
+import org.apache.flink.runtime.taskmanager.TaskActions;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Timer;
+
+import static org.apache.flink.util.Preconditions.checkArgument;
+import static org.apache.flink.util.Preconditions.checkNotNull;
+import static org.apache.flink.util.Preconditions.checkState;
+
+/**
+ * An input gate consumes one or more partitions of a single produced intermediate result.
+ *
+ * <p>Each intermediate result is partitioned over its producing parallel subtasks; each of these
+ * partitions is furthermore partitioned into one or more subpartitions.
+ *
+ * <p>As an example, consider a map-reduce program, where the map operator produces data and the
+ * reduce operator consumes the produced data.
+ *
+ * <pre>{@code
+ * +-----+              +---------------------+              +--------+
+ * | Map | = produce => | Intermediate Result | <= consume = | Reduce |
+ * +-----+              +---------------------+              +--------+
+ * }</pre>
+ *
+ * <p>When deploying such a program in parallel, the intermediate result will be partitioned over its
+ * producing parallel subtasks; each of these partitions is furthermore partitioned into one or more
+ * subpartitions.
+ *
+ * <pre>{@code
+ *                            Intermediate result
+ *               +-----------------------------------------+
+ *               |                      +----------------+ |              +-----------------------+
+ * +-------+     | +-------------+  +=> | Subpartition 1 | | <=======+=== | Input Gate | Reduce 1 |
+ * | Map 1 | ==> | | Partition 1 | =|   +----------------+ |         |    +-----------------------+
+ * +-------+     | +-------------+  +=> | Subpartition 2 | | <==+    |
+ *               |                      +----------------+ |    |    | Subpartition request
+ *               |                                         |    |    |
+ *               |                      +----------------+ |    |    |
+ * +-------+     | +-------------+  +=> | Subpartition 1 | | <==+====+
+ * | Map 2 | ==> | | Partition 2 | =|   +----------------+ |    |         +-----------------------+
+ * +-------+     | +-------------+  +=> | Subpartition 2 | | <==+======== | Input Gate | Reduce 2 |
+ *               |                      +----------------+ |              +-----------------------+
+ *               +-----------------------------------------+
+ * }</pre>
+ *
+ * <p>In the above example, two map subtasks produce the intermediate result in parallel, resulting
+ * in two partitions (Partition 1 and 2). Each of these partitions is further partitioned into two
+ * subpartitions -- one for each parallel reduce subtask.
+ */
+public class SingleInputGate implements InputGate {
+```
   
 
 
