@@ -7,7 +7,7 @@
 
 ## StreamGraph 图
 - https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/wordCount/flink-streamGraph-3.png
-!()[https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/wordCount/flink-streamGraph-3.png]
+- !()[https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/images/wordCount/flink-streamGraph-3.png]
 
 ## 输入数据
 
