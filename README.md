@@ -97,6 +97,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - Flink1.7.2 local WordCount源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/flink-local-wordCount-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.md
 - Flink Sink 接收数据的顺序(Window发送数据顺序): https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-sink-order.md
 - Flink Window 排序: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-window-order.md
+- Flink1.7.2  Source、Window数据交互源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/flink-source-window-data-exchange.md
 - Flink1.7.2  并行计算源码分析: https://github.com/opensourceteams/fink-maven-scala-2/blob/master/md/miniCluster/Flink-Parallelism-Calculation.md
 
 ### Flink1.7.2 时序图
