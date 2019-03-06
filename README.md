@@ -2,6 +2,7 @@
 - 微信:thinktothings
 - 微博:https://weibo.com/thinktothings
 - Flink版本为1.7.2
+- 本站持续更新中.......2019-03-06.......
 
 
 ## 源码
