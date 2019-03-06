@@ -3,6 +3,10 @@
 - 微博:https://weibo.com/thinktothings
 - Flink版本为1.7.2
 
+
+## 源码
+- https://github.com/opensourceteams/flink-maven-scala
+
 ###  查看jar中文件列表
 ```aidl
 jar tvf test.jar 
