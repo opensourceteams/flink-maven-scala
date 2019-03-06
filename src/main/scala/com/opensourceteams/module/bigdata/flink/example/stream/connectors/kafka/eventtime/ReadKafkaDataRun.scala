@@ -46,12 +46,12 @@ object ReadKafkaDataRun {
     import org.apache.flink.streaming.api.scala._
     env.addSource(new FlinkKafkaConsumer[String]("topic1", new SimpleStringSchema(), properties))
 
-      .setParallelism(3)
+     // .setParallelism(3)
 
 
       .assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermarks[String] {
 
-        val maxOutOfOrderness =  10 * 1000L // 3.5 seconds
+        val maxOutOfOrderness =  1 * 1000L // 3.5 seconds
         var currentMaxTimestamp: Long = _
         var currentTimestamp: Long = _
 
@@ -78,16 +78,30 @@ object ReadKafkaDataRun {
 
       .process(new ProcessAllWindowFunction[String,String,TimeWindow]() {
       override def process(context: Context, elements: Iterable[String], out: Collector[String]): Unit = {
-        for(e <- elements) out.collect(e)
+
 
         println()
+        println("开始提交window")
+        println(new Date())
+        for(e <- elements) out.collect(e)
+        println("结束提交window")
         println(new Date())
         println()
       }
     })
 
-      .print().setParallelism(3)
+      .print()
+      //.setParallelism(3)
 
+
+
+
+
+    println("==================================以下为执行计划==================================")
+    println("执行地址(firefox效果更好):https://flink.apache.org/visualizer")
+    //执行计划
+    println(env.getStreamGraph.getStreamingPlanAsJSON)
+    println("==================================以上为执行计划 JSON串==================================\n")
 
 
     env.execute("读取kafka数据")
