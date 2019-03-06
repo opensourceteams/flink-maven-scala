@@ -57,6 +57,15 @@
 		</dependency>
 
 
+		<!-- flink kafka-->
+
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+
+
 		<!-- Hadoop -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -92,6 +101,13 @@
 			<version>${flink.version}</version>
 		</dependency>
 		-->
+
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.56</version>
+		</dependency>
 
 
 
