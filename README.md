@@ -77,16 +77,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 ```
 
 
-### Flink 源码debug方法
-- https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-debug.md
 
-
-
-
-
-
-### Flink 名词术语
-- https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-concept.md
 
 
 
@@ -115,6 +106,14 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 {"nodes":[{"id":1,"type":"Source: Socket Stream","pact":"Data Source","contents":"Source: Socket Stream","parallelism":1},{"id":2,"type":"Flat Map","pact":"Operator","contents":"Flat Map","parallelism":1,"predecessors":[{"id":1,"ship_strategy":"FORWARD","side":"second"}]},{"id":3,"type":"Map","pact":"Operator","contents":"Map","parallelism":1,"predecessors":[{"id":2,"ship_strategy":"FORWARD","side":"second"}]},{"id":5,"type":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","pact":"Operator","contents":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","parallelism":1,"predecessors":[{"id":3,"ship_strategy":"HASH","side":"second"}]},{"id":6,"type":"Sink: Print to Std. Out","pact":"Data Sink","contents":"Sink: Print to Std. Out","parallelism":1,"predecessors":[{"id":5,"ship_strategy":"FORWARD","side":"second"}]}]}
 
 ```
+
+
+### Flink 环境，配置 
+- Flink 源码debug方法: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-debug.md
+- Flink 名词术语 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-concept.md
+- Flink 源码编译: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-build.md
+
+
 
 ### example
 - scala 版Flink WordCount单词统计 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/wordCount-scala.md
