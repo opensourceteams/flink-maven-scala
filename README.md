@@ -8,6 +8,11 @@
 ## 源码
 - https://github.com/opensourceteams/flink-maven-scala
 
+## 中文文档
+- Flink 1.7中文文档(官网英文翻译过来): http://flink.apachecn.org/docs/1.7-SNAPSHOT/#/README
+- Flink 1.7中文文档(官网英文翻译过来) PDF版: http://flink.apachecn.org/docs/1.7-SNAPSHOT/#/README
+
+
 ###  查看jar中文件列表
 ```aidl
 jar tvf test.jar 
