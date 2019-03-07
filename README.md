@@ -28,19 +28,10 @@ benv.fromElements(1,2,3).map(i => i * i ).print
 
 ```
 
-###  查看jar中文件列表
+### 运行 jar 到 Flink 集群
 ```aidl
-jar tvf test.jar 
+ flink run -c  com.opensourceteams.module.bigdata.flink.example.stream.worldcount.nc.SocketWindowWordCount    ./flink-maven-scala-2-0.0.1.jar  
 
-```
-### 执行计划图
-- 地址:https://flink.apache.org/visualizer
-
-```aidl
-      //执行计划
-      //println(env.getExecutionPlan)
-      //StreamGraph
-     //println(env.getStreamGraph.getStreamingPlanAsJSON)
 ```
 
 
@@ -73,6 +64,11 @@ mvn archetype:generate                               \
 
 ```
 
+###  查看jar中文件列表
+```aidl
+jar tvf test.jar 
+
+```
 
 ### maven 运行某个类
 ```aidl
@@ -85,14 +81,6 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-debug.md
 
 
-### 运行 jar 到 Flink 集群
-```aidl
- flink run -c  com.opensourceteams.module.bigdata.flink.example.stream.worldcount.nc.SocketWindowWordCount    ./flink-maven-scala-2-0.0.1.jar  
-
-```
-
-### scala 版Flink WordCount单词统计 
-- https://github.com/opensourceteams/flink-maven-scala/blob/master/md/wordCount-scala.md
 
 
 
@@ -100,9 +88,20 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 ### Flink 名词术语
 - https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-concept.md
 
-## 执行计划
-- 用Firefox 打开，显示的比较全
-- https://flink.apache.org/visualizer
+
+
+### 执行计划图
+- 用Firefox 打开，显示的比较全(别浏览器有显示不全的现象)
+- 地址:https://flink.apache.org/visualizer
+
+```aidl
+      //执行计划
+      //println(env.getExecutionPlan)
+      //StreamGraph
+     //println(env.getStreamGraph.getStreamingPlanAsJSON)
+```
+
+
 
 ### Execute Plan
 ```aidl
@@ -116,6 +115,10 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 {"nodes":[{"id":1,"type":"Source: Socket Stream","pact":"Data Source","contents":"Source: Socket Stream","parallelism":1},{"id":2,"type":"Flat Map","pact":"Operator","contents":"Flat Map","parallelism":1,"predecessors":[{"id":1,"ship_strategy":"FORWARD","side":"second"}]},{"id":3,"type":"Map","pact":"Operator","contents":"Map","parallelism":1,"predecessors":[{"id":2,"ship_strategy":"FORWARD","side":"second"}]},{"id":5,"type":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","pact":"Operator","contents":"Window(TumblingProcessingTimeWindows(3000), ProcessingTimeTrigger, SumAggregator, PassThroughWindowFunction)","parallelism":1,"predecessors":[{"id":3,"ship_strategy":"HASH","side":"second"}]},{"id":6,"type":"Sink: Print to Std. Out","pact":"Data Sink","contents":"Sink: Print to Std. Out","parallelism":1,"predecessors":[{"id":5,"ship_strategy":"FORWARD","side":"second"}]}]}
 
 ```
+
+### example
+- scala 版Flink WordCount单词统计 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/wordCount-scala.md
+
 
 ### Flink1.7.2 源码分析
 - Flink MiniCluster 作业提交: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/MiniCluster-job-submit.md
