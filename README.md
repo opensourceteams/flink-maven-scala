@@ -118,6 +118,20 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 
 ### example
 - scala 版Flink WordCount单词统计 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/wordCount-scala.md
+- wordCount Dataset批处理
+    - start-scala-shell.sh  local
+    - 参数说明:[local | remote <host> <port> | yarn]
+    ```aidl
+    benv.fromElements("a b a c").flatMap(x => x.split(" ")).map((_,1)).groupBy(0).sum(1).print
+
+    ```
+    
+    - 输出结果
+    ```aidl
+      (a,2)
+      (b,1)
+      (c,1)
+    ```
 
 
 ### Flink1.7.2 源码分析
