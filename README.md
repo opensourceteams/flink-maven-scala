@@ -117,3 +117,9 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - Flink Execution deploy和source数据读取(时序图): https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/003-execution-deploy-source%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96.png
 - Flink OperatorChian计算source数据(时序图): https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/004_operatorChain_%E8%AE%A1%E7%AE%97source%E6%95%B0%E6%8D%AE.png
 - Flink 005-source-operation-sink源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/005-source-operation-sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.png
+
+
+
+
+## Flink 1.7.2 Error 收集
+- Flink 1.7.2 Error 收集: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-error.md
