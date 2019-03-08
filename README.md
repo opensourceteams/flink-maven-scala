@@ -131,7 +131,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
       (b,1)
       (c,1)
     ```
-
+- Flink 1.7.2 DataStream operator 示例 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/datastream/flink-datastream-operator.md
 
 ### Flink1.7.2 源码分析
 - Flink MiniCluster 作业提交: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/MiniCluster-job-submit.md
