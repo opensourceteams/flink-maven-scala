@@ -21,6 +21,9 @@ object Run {
       * 只是将两个流的数据，union在一起，之后，不能再进行操作了
       */
     val dataStream3 = dataStream1.union(dataStream2)
+   /* dataStream3.keyBy(0)
+      .timeWindow(Time.seconds(5))//每2秒滚动窗口
+      .sum(1)*/
 
 
 
