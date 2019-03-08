@@ -776,8 +776,10 @@ object Run {
 - 定义window,并指定分配元素到window的方式
 - 可以在已经分区的KeyedStream上定义Windows。 Windows根据某些特征（例如，在最后5秒内到达的数据）对每个密钥中的数据进行分组。 有关窗口的完整说明，请参见windows。
 - 输入数据
+
 ```
 b a b a a b
+
 ```
 
 - 程序
@@ -858,6 +860,7 @@ object Run {
 
 ```
 b a b a a b
+
 ```
 - 程序
 
