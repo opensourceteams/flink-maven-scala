@@ -681,10 +681,12 @@ object Run {
 ### max(和maxBy一样)
 - 处理所有元素，对相同key的元素，进行求最大的值 
 - 输入数据
+
 ```
 b a b a a b
 ```
 - 程序
+
 ```
 package com.opensourceteams.module.bigdata.flink.example.datastream.operator.aggregations.sum
 
@@ -746,6 +748,7 @@ object Run {
 }
 
 ```
+
 - 输出数据
 
 - 最终输出数据，顺序取决于线程的调用
@@ -756,6 +759,7 @@ object Run {
 ```
 
 - 中间输出数据
+
 ```aidl
 6> (a,2)
 2> (b,1)
@@ -775,7 +779,9 @@ object Run {
 ```
 b a b a a b
 ```
+
 - 程序
+
 ```
 package com.opensourceteams.module.bigdata.flink.example.datastream.operator.window.window
 
@@ -837,6 +843,7 @@ object Run {
 }
 
 ```
+
 - 输出数据
  
 (b,3)
@@ -848,10 +855,12 @@ object Run {
 ### WindowAll
 - 配合process.ProcessAllWindowFunction函数，该函数的参数elements: Iterable[(String, Int)] 即为当前window的所有元素，可以进行处理，再发给下游sink
 - 输入数据
+
 ```
 b a b a a b
 ```
 - 程序
+
 ```
 package com.opensourceteams.module.bigdata.flink.example.datastream.operator.window.windowAll
 
@@ -925,6 +934,7 @@ object Run {
 }
 
 ```
+
 - 输出数据
  
 ```
