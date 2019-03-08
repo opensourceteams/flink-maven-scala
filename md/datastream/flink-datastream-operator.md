@@ -508,3 +508,77 @@ object Run {
 开始字符串-(b,1)
 ```
 
+## Aggregations
+### sum
+- 处理所有元素,相同key进行累加
+- 输入数据
+```
+a a c b c
+```
+- 程序
+```
+package com.opensourceteams.module.bigdata.flink.example.stream.operator.aggregations.sum
+
+import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
+import org.apache.flink.streaming.api.windowing.time.Time
+
+/**
+  * nc -lk 1234  输入数据
+  */
+object Run {
+
+  def main(args: Array[String]): Unit = {
+
+
+    val port = 1234
+    // get the execution environment
+    val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
+    //env.setParallelism(1)  //设置并行度,不设置就是默认最高并行度为的cpu ,我的四核8线程，就是最高并行度为8
+    val dataStream = env.socketTextStream("localhost", port, '\n')
+
+
+    val dataStream2 = dataStream.flatMap(x => x.split(" ")).map((_,1))
+      .keyBy(0)
+
+      //dataStream.keyBy("someKey") // Key by field "someKey"
+      //dataStream.keyBy(0) // Key by the first element of a Tuple
+
+      .timeWindow(Time.seconds(2))//每2秒滚动窗口
+      .sum(1)
+
+
+
+
+
+    dataStream2.print()
+
+
+
+
+    println("=======================打印StreamPlanAsJSON=======================\n")
+    println("JSON转图在线工具: https://flink.apache.org/visualizer")
+    println(env.getStreamGraph.getStreamingPlanAsJSON)
+    println("==================================================================\n")
+
+    if(args == null || args.size ==0){
+      env.execute("默认作业")
+    }else{
+      env.execute(args(0))
+    }
+
+    println("结束")
+
+  }
+
+
+}
+
+```
+- 输出数据
+ 
+```
+4> (c,2)
+2> (b,1)
+6> (a,2)
+
+```
