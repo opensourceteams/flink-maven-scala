@@ -842,3 +842,96 @@ object Run {
 (b,3)
 (a,3)
 ```
+
+
+
+### WindowAll
+- 配合process.ProcessAllWindowFunction函数，该函数的参数elements: Iterable[(String, Int)] 即为当前window的所有元素，可以进行处理，再发给下游sink
+- 输入数据
+```
+b a b a a b
+```
+- 程序
+```
+package com.opensourceteams.module.bigdata.flink.example.datastream.operator.window.windowAll
+
+import org.apache.flink.streaming.api.scala.function.ProcessAllWindowFunction
+import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
+import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows
+import org.apache.flink.streaming.api.windowing.time.Time
+import org.apache.flink.streaming.api.windowing.windows.TimeWindow
+import org.apache.flink.util.Collector
+
+/**
+  * nc -lk 1234  输入数据
+  */
+object Run {
+
+  def main(args: Array[String]): Unit = {
+
+
+    val port = 1234
+    // get the execution environment
+    val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
+    //env.setParallelism(1)  //设置并行度
+    val dataStream = env.socketTextStream("localhost", port, '\n')
+
+
+    dataStream.flatMap(x => x.split(" ")).map((_,1))
+      .keyBy(0)
+
+
+      .windowAll( TumblingProcessingTimeWindows.of(Time.seconds(2)))
+        .process(new ProcessAllWindowFunction[(String, Int),(String, Int),TimeWindow] {
+          override def process(context: Context, elements: Iterable[(String, Int)], out: Collector[(String, Int)]): Unit = {
+            //可以对当前window中的所有元素进行操作，处理后，再发送给Sink
+            for(element <- elements) out.collect(element)
+          }
+        })
+
+        .print()
+
+
+
+
+
+    println("=======================打印StreamPlanAsJSON=======================\n")
+    println("JSON转图在线工具: https://flink.apache.org/visualizer")
+    println(env.getStreamGraph.getStreamingPlanAsJSON)
+    println("==================================================================\n")
+
+    if(args == null || args.size ==0){
+      env.execute("默认作业")
+    }else{
+      env.execute(args(0))
+    }
+
+    println("结束")
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+}
+
+```
+- 输出数据
+ 
+```
+8> (a,1)
+7> (b,1)
+3> (a,1)
+2> (a,1)
+1> (b,1)
+4> (b,1)
+```
