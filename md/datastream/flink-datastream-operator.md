@@ -1,7 +1,4 @@
-# Flink 1.7.2 DataStream operator
-
-## 源码
-- https://github.com/opensourceteams/flink-maven-scala
+# Flink1.7.2  DataStream Operator
 
 ### map
 - 处理所有元素
@@ -424,9 +421,7 @@ a
     6> (a,2)
     4> (c,1)
     2> (b,1)
-
 ```
-
 
 - 并行度为1，就先去重，取第一个元素，再按从最后一个开始,即  c a b a 变为  c a b 然后变成  c b a 
 
@@ -439,4 +434,77 @@ a
 ```
 
 
+### fold
+- 按key进行处理，第一个参数，是字符串，放在每次处理的最前面第二个是表达式，第二个表达式有两个参数，第一个参数，就是第一个参数的值，第二个参数，我每次循环key时，迭代的下一个元素
+- 输入数据
+```
+a a b c c 
+```
+- 程序
+```
+package com.opensourceteams.module.bigdata.flink.example.stream.operator.fold
+
+import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
+import org.apache.flink.streaming.api.windowing.time.Time
+
+/**
+  * nc -lk 1234  输入数据
+  */
+object Run {
+
+  def main(args: Array[String]): Unit = {
+
+
+    val port = 1234
+    // get the execution environment
+    val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
+    env.setParallelism(1)  //设置并行度
+    val dataStream = env.socketTextStream("localhost", port, '\n')
+
+
+    val dataStream2 = dataStream.flatMap(x => x.split(" ")).map((_,1))
+      .keyBy(0)
+
+
+      //dataStream.keyBy("someKey") // Key by field "someKey"
+      //dataStream.keyBy(0) // Key by the first element of a Tuple
+
+      .timeWindow(Time.seconds(2))//每2秒滚动窗口
+      .fold("开始字符串")((str, i) => { str + "-" + i} )
+
+
+
+
+
+    dataStream2.print()
+
+
+
+
+    println("=======================打印StreamPlanAsJSON=======================\n")
+    println("JSON转图在线工具: https://flink.apache.org/visualizer")
+    println(env.getStreamGraph.getStreamingPlanAsJSON)
+    println("==================================================================\n")
+
+    if(args == null || args.size ==0){
+      env.execute("默认作业")
+    }else{
+      env.execute(args(0))
+    }
+
+    println("结束")
+
+  }
+
+
+}
+
+```
+- 输出数据
+ 
+```
+开始字符串-(a,1)-(a,1)
+开始字符串-(c,1)-(c,1)
+开始字符串-(b,1)
+```
 
