@@ -1,5 +1,6 @@
 package com.opensourceteams.module.bigdata.flink.example.dataset.worldcount
 
+import com.opensourceteams.module.bigdata.flink.common.ConfigurationUtil
 import org.apache.flink.api.scala.ExecutionEnvironment
 
 
@@ -11,15 +12,21 @@ object WordCountRun {
 
   def main(args: Array[String]): Unit = {
 
-    val env : ExecutionEnvironment= ExecutionEnvironment.getExecutionEnvironment
+    //调试设置超时问题
+    val env : ExecutionEnvironment= ExecutionEnvironment.createLocalEnvironment(ConfigurationUtil.getConfiguration(true))
+    env.setParallelism(1)
 
     val dataSet = env.readTextFile("file:/opt/n_001_workspaces/bigdata/flink/flink-maven-scala-2/src/main/resources/data/line.txt")
 
 
     import org.apache.flink.streaming.api.scala._
-    dataSet.flatMap(x => x.split(" ")).map((_,1)).groupBy(0).sum(1)
+    val result = dataSet.flatMap(x => x.split(" ")).map((_,1)).groupBy(0).sum(1)
 
-      .print()
+
+
+    result.print()
+
+
 
 
   }

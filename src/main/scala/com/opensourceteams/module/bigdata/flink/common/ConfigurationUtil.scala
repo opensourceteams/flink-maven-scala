@@ -10,11 +10,14 @@ object ConfigurationUtil {
     val configuration : Configuration = new Configuration()
 
     if(isDebug){
+      val timeoutValue = 100000
       val timeout = "100000 s"
       val timeoutHeartbeatPause = "1000000 s"
       configuration.setString("akka.ask.timeout",timeout)
+      configuration.setString("akka.client.timeout",timeout)
       configuration.setString("akka.lookup.timeout",timeout)
       configuration.setString("akka.tcp.timeout",timeout)
+      configuration.setInteger("web.timeout",timeoutValue)
       configuration.setString("akka.transport.heartbeat.interval",timeout)
       configuration.setString("akka.transport.heartbeat.pause",timeoutHeartbeatPause)
       configuration.setString("akka.watch.heartbeat.pause",timeout)
