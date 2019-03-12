@@ -14,7 +14,7 @@ object WordCountRun {
 
     //调试设置超时问题
     val env : ExecutionEnvironment= ExecutionEnvironment.createLocalEnvironment(ConfigurationUtil.getConfiguration(true))
-    env.setParallelism(1)
+    env.setParallelism(2)
 
     val dataSet = env.readTextFile("file:/opt/n_001_workspaces/bigdata/flink/flink-maven-scala-2/src/main/resources/data/line.txt")
 

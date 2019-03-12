@@ -142,7 +142,10 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - Flink1.7.2  并行计算源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/Flink-Parallelism-Calculation.md
 - Flink 1.7.2 业务时间戳分析流式数据源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/Flink-EventTime-watermark.md
 
--  Flink1.7.2  Dataset local 源码分析 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-local.md
+- Flink1.7.2  Dataset local 源码分析 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-local.md
+- Flink1.7.2  Dataset 文件切分切片和切片数据读取源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-FileInputSplit.md
+- Flink1.7.2  Dataset 并行计算源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-parallel-cal.md
+
 
 ### Flink1.7.2 时序图
 - Flink 客户端提交程序到MiniCluster(时序图): https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/001-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8F%90%E4%BA%A4%E7%A8%8B%E5%BA%8F%E5%88%B0MiniCluster.png
