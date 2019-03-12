@@ -1,2 +1,4 @@
-c a a
-b c
+a b a
+a a a
+b b b
+c b a
