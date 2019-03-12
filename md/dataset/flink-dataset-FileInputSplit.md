@@ -12,7 +12,9 @@
 - 实际开始位置，由切片分到的位置开始算，找到第一个换行符的位置 +1开始计算
 - 结束位置,当读到的位置索引，大于等于切片数据大小时，说明本切片已读完，如果下一个切片还有数据，就从下一个切片读到第一个换行符的数据，如果没有下一个切片，就到当前读到的位置结束
 
-
+## 图解
+- https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%B8%89.png
+- ![](https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%B8%89.png)
 ## 输入数据
 - 注意空格，第一行6个byte,第二行3个byte,(一共9个byte的数据,9个byte中包括一个byte的换行符)
 ```
