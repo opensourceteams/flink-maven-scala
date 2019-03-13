@@ -18,7 +18,12 @@
 
 ## 图解
 - https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%B8%89.png
+- https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%B8%80.png
+- https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%AE%89%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%BA%8C.png
+
 - ![](https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%B8%89.png)
+- ![](https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%B8%80.png)
+- ![](https://github.com/opensourceteams/flink-maven-scala/blob/master/md/images/wordCount/dataset/%E5%88%87%E5%AE%89%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B%E4%BA%8C.png)
 ## 输入数据
 - 注意空格，第一行6个byte,第二行3个byte,(一共9个byte的数据,9个byte中包括一个byte的换行符)
 ```
