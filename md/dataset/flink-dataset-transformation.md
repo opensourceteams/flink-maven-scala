@@ -1,7 +1,12 @@
-# Flink 1.7.2 dataset transformation
+# Flink 1.7.2 dataset transformation 示例
 
 ## 源码
 - https://github.com/opensourceteams/flink-maven-scala
+
+## 概述
+- Flink transformation示例 
+- map,flatMap,filter,reduce,groupBy,reduceGroup,combineGroup,Aggregate(sum,max,min)
+- distinct,join,join funtion,leftOuterJoin,rightOuterJoin,fullOuterJoin,union,first,coGroup,cross
 
 ## transformation
 
