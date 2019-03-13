@@ -1,10 +1,12 @@
 package com.opensourceteams.module.bigdata.flink.example.dataset.transformation.reduceGroup
 
 import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.util.Collector
+
 
 
 /**
-  * 相当于，直接把前边的集合，全部做为集合参数传进来
+  * 相同的key的元素，都一次做为参数传进来了
   */
 object Run {
 
@@ -12,12 +14,42 @@ object Run {
 
 
     val env = ExecutionEnvironment.getExecutionEnvironment
+    env.setParallelism(1)
 
-    val dataSet = env.fromElements(3,5,8,9)
+    val dataSet = env.fromElements("a","a","c","b","a")
 
-    dataSet.reduceGroup(x => {
-      for(e <- x.toList) println(e)
-    })
+
+
+    /**
+      * 中间数据
+      * (a,1)
+      * (a,1)
+      * (c,1)
+      * (b,1)
+      * (a,1)
+      */
+    val result = dataSet.map((_,1)).groupBy(0).reduceGroup(
+
+
+      (in, out: Collector[(String,Int)]) =>{
+
+        var count = 0 ;
+        var word = "";
+        while (in.hasNext){
+
+          val next  = in.next()
+          word = next._1
+          count = count + next._2
+
+        }
+        out.collect((word,count))
+      }
+
+
+    )
+
+
+    result.print()
 
 
   }
