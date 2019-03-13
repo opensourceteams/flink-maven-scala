@@ -133,7 +133,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
     ```
 - Flink 1.7.2 DataStream operator 示例 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/datastream/flink-datastream-operator.md
 
-### Flink1.7.2 源码分析
+### Flink1.7.2 DataStream 源码分析(流处理)
 - Flink MiniCluster 作业提交: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/MiniCluster-job-submit.md
 - Flink1.7.2 local WordCount源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/flink-local-wordCount-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.md
 - Flink Sink 接收数据的顺序(Window发送数据顺序): https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/flink-sink-order.md
@@ -142,6 +142,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - Flink1.7.2  并行计算源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/Flink-Parallelism-Calculation.md
 - Flink 1.7.2 业务时间戳分析流式数据源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/miniCluster/Flink-EventTime-watermark.md
 
+### Flink1.7.2 Dataset 源码分析(批处理)
 - Flink1.7.2  Dataset local 源码分析 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-local.md
 - Flink1.7.2  Dataset 文件切分切片和切片数据读取源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-FileInputSplit.md
 - Flink1.7.2  Dataset 并行计算源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-parallel-cal.md
