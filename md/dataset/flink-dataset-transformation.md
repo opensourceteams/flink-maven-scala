@@ -1477,3 +1477,63 @@ Process finished with exit code 0
 
 
 ```
+
+
+
+
+
+
+
+### cross
+-  交叉连接
+
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.dataset.transformation.cross
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+
+
+object Run {
+
+  def main(args: Array[String]): Unit = {
+
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+    val dataSet = env.fromElements(("a",1),("g",1),("f",1))
+    val dataSet2 = env.fromElements(("d",1),("f",1),("g",1),("f",1))
+
+
+    //全外连接
+    val dataSet3 = dataSet.cross(dataSet2)
+
+
+
+    dataSet3.print()
+
+  }
+
+}
+
+
+```
+- 输出结果
+
+```aidl
+((a,1),(d,1))
+((a,1),(f,1))
+((a,1),(g,1))
+((a,1),(f,1))
+((g,1),(d,1))
+((g,1),(f,1))
+((g,1),(g,1))
+((g,1),(f,1))
+((f,1),(d,1))
+((f,1),(f,1))
+((f,1),(g,1))
+((f,1),(f,1))
+
+
+
+```
