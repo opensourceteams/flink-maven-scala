@@ -622,7 +622,7 @@ object Run {
 
 
 
-### Aggregate max
+### Aggregate max 
 - 按key分组 对Tuple2(String,Int) 中value进行求最大值操作
 
 
@@ -802,7 +802,7 @@ object Run {
 
 
 
-### Aggregate max (groupBy)
+### Aggregate max (groupBy)   等于  maxBy
 - 按key分组 对Tuple2(String,Int) 中value 进行求最大值
 - 示例功能:按key分组统计最大值
 
@@ -867,7 +867,7 @@ object Run {
 
 
 
-### Aggregate min (groupBy)
+### Aggregate min (groupBy) 等于minBy
 - 按key分组 对Tuple2(String,Int) 中value 进行求最小值
 - 示例功能:按key分组统计最小值
 
@@ -925,3 +925,5 @@ object Run {
 (c,1)
 (g,1)
 ```
+
+
