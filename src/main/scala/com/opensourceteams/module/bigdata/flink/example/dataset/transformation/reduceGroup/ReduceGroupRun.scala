@@ -33,8 +33,6 @@ object ReduceGroupRun {
 
       (in, out: Collector[(String,Int)]) =>{
 
-
-
         var count = 0 ;
         var word = "";
         while (in.hasNext){

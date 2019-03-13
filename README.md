@@ -146,6 +146,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
 - Flink1.7.2  Dataset local 源码分析 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-local.md
 - Flink1.7.2  Dataset 文件切分切片和切片数据读取源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-FileInputSplit.md
 - Flink1.7.2  Dataset 并行计算源码分析: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-parallel-cal.md
+- Flink1.7.2  Dataset transformation示例: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-transformation.md
 
 
 ### Flink1.7.2 时序图
