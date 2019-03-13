@@ -350,3 +350,128 @@ object ReduceGroupRun {
 (c,1)
 
 ```
+
+
+
+
+
+### groupBy   (class Fields)
+- 对集合中所有元素，按用例类中的属性，进行分组
+- 示例功能:按key分组统计所有数据的和
+
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.dataset.transformation.groupByClassFields
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+
+
+/**
+  * 相当于按key进行分组,然后对组内的元素进行的累加操作，求和操作
+  */
+object ReduceGroupRun {
+
+  def main(args: Array[String]): Unit = {
+
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+    val dataSet = env.fromElements("a","b","c","a","c","d","f","g","f")
+
+    /**
+      * (a,1)
+      * (b,1)
+      * (c,1)
+      * (a,1)
+      * (c,1)
+      * (d,1)
+      * (f,1)
+      * (g,1)
+      */
+
+    val dataSet2 = dataSet.map(WordCount(_,1)).groupBy("word").reduce((x,y) => WordCount(x.word, x.count + y.count))
+
+
+
+    dataSet2.print()
+
+  }
+
+  case class WordCount(word:String,count:Int)
+
+}
+
+
+
+```
+- 输出结果
+
+```aidl
+WordCount(d,1)
+WordCount(a,2)
+WordCount(f,2)
+WordCount(b,1)
+WordCount(c,2)
+WordCount(g,1)
+
+```
+
+
+
+### groupBy   (key Selector)
+- 对集合中所有元素，按key 选择器进行分组
+- 示例功能:按key分组统计所有数据的和
+
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.dataset.transformation.groupByKeySelector
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+
+
+/**
+  * 相当于按key进行分组,然后对组内的元素进行的累加操作，求和操作
+  */
+object ReduceGroupRun {
+
+  def main(args: Array[String]): Unit = {
+
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+    val dataSet = env.fromElements("a","b","c","a","c","d","f","g","f")
+
+    /**
+      * (a,1)
+      * (b,1)
+      * (c,1)
+      * (a,1)
+      * (c,1)
+      * (d,1)
+      * (f,1)
+      * (g,1)
+      */
+
+    val dataSet2 = dataSet.map((_,1)).groupBy(_._1).reduce((x,y) => (x._1,x._2 +y._2))
+
+
+
+    dataSet2.print()
+
+  }
+
+}
+
+
+```
+- 输出结果
+
+```aidl
+WordCount(d,1)
+WordCount(a,2)
+WordCount(f,2)
+WordCount(b,1)
+WordCount(c,2)
+WordCount(g,1)
+
+```
