@@ -5,8 +5,8 @@
 
 ## 概述
 - Flink transformation示例 
-- map,flatMap,filter,reduce,groupBy,reduceGroup,combineGroup,Aggregate(sum,max,min)
-- distinct,join,join funtion,leftOuterJoin,rightOuterJoin,fullOuterJoin,union,first,coGroup,cross
+- map,flatMap,filter,reduce,groupBy reduceGroup combineGroup Aggregate(sum,max,min)
+- distinct join join funtion leftOuterJoin rightOuterJoin fullOuterJoin union first coGroup cross
 
 ## transformation
 

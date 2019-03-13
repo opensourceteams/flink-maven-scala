@@ -1,5 +1,8 @@
 # Flink1.7.2  Dataset 并行计算源码分析
 
+## 概述
+- 了解Flink处理流程(用户程序 -> JobGrapth -> ExecutionGraph -> JobVertex -> ExecutionVertex -> 并行度 -> Task(DataSourceTask,BatchTask,DataSinkTask)
+- 了解ExecutionVetex的构建，Task的构建，执行，任务之间的调用关系
 
 ## 原理分析
 - 程序会转成JobGrapth提交,JobGraph最终转为ExecutionGraph进行处理
