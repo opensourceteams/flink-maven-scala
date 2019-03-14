@@ -9,7 +9,8 @@
 - https://github.com/opensourceteams/flink-maven-scala
 
 ## Flink源码分析视频集
-- https://space.bilibili.com/389781728/channel/detail?cid=57928
+- bilibili: https://space.bilibili.com/389781728/channel/detail?cid=57928
+- youtub: https://www.youtube.com/watch?v=Yte40CsKitY&list=PLKt2LvPElMxVplfb2W2NBhAtaX76wUOOD
 
 ## 中文文档
 - Flink 1.7中文文档(官网英文翻译过来) 在线版: http://flink.apachecn.org/docs/1.7-SNAPSHOT/#/README
