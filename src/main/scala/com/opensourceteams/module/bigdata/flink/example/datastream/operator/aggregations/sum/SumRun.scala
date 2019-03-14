@@ -6,7 +6,7 @@ import org.apache.flink.streaming.api.windowing.time.Time
 /**
   * nc -lk 1234  输入数据
   */
-object Run {
+object SumRun {
 
   def main(args: Array[String]): Unit = {
 
