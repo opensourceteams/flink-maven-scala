@@ -8,6 +8,9 @@
 ## 源码
 - https://github.com/opensourceteams/flink-maven-scala
 
+## Flink源码分析视频集
+- https://space.bilibili.com/389781728/channel/detail?cid=57928
+
 ## 中文文档
 - Flink 1.7中文文档(官网英文翻译过来) 在线版: http://flink.apachecn.org/docs/1.7-SNAPSHOT/#/README
 - Flink 1.7中文文档(官网英文翻译过来) PDF版: https://github.com/opensourceteams/flink-maven-scala/blob/master/doc/flink-1.7-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3(%E5%AE%98%E7%BD%91%E8%8B%B1%E6%96%87%E7%BF%BB%E8%AF%91%E8%BF%87%E6%9D%A5).pdf
