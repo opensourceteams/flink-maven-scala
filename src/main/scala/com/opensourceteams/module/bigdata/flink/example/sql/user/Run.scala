@@ -1,4 +1,4 @@
-package com.opensourceteams.module.bigdata.flink.example.tableapi.sql.user
+package com.opensourceteams.module.bigdata.flink.example.sql.user
 
 import org.apache.flink.api.scala.{ExecutionEnvironment, _}
 import org.apache.flink.table.api.TableEnvironment
