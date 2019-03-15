@@ -1,5 +1,60 @@
 # flink1.7.2 tableapi批处理示例
 
+### print table 
+- 功能描述: 打印输出表数据
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.convert.dataset
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run2 {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    table.first(1000).print()
+
+
+    /**
+      * 打印输出表数据
+      *
+      * 1,a,10
+      * 2,b,20
+      * 3,c,30
+      */
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+1,a,10
+2,b,20
+3,c,30
+
+```
+
 ### DataSet 转换成table
 
 ```aidl
