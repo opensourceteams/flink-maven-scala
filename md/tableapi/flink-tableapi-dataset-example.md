@@ -762,3 +762,59 @@ object Run2 {
 60
 
 ```
+
+
+
+### join 
+- 功能描述: 内连接
+
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.innerJoin
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+    val dataSet2 = env.fromElements( (1,"a",100),(20,"b",20), (30,"c",30) )
+
+
+
+    //列不能重复
+    val table = tableEnv.fromDataSet(dataSet,'a,'b,'c)
+    val table2 = tableEnv.fromDataSet(dataSet2,'d,'e,'f)
+
+
+
+   table.join(table2).where(" a = d ").first(1000).print()
+
+
+
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+
+1,a,10,1,a,100
+
+```
