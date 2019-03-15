@@ -24,7 +24,7 @@ object Run {
 
 
 
-    tableEnv.sqlQuery(s"select name,age as 年龄 FROM user1")
+    tableEnv.sqlQuery(s"select name a,age as b FROM user1")
       .first(100).print()
 
 

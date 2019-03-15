@@ -1,34 +1,198 @@
 # Flink1.7.2 sql 示例
 
+## 源码
+- https://github.com/opensourceteams/flink-maven-scala
+
 ## SELECT
 
-### scan
-- 功能描述:
+
+
+### Scan / Select
+- 功能描述: 查询一个表中的所有数据
 - scala 程序
 
 ```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.scan
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements(("小明",15,"男"),("小王",45,"男"),("小李",25,"女"),("小慧",35,"女"))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user1",dataSet,'name,'age,'sex)
+
+
+
+    tableEnv.sqlQuery(s"select name,age FROM user1")
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 小明,15
+      * 小王,45
+      * 小李,25
+      * 小慧,35
+      */
+  }
+
+}
+
 
 ```
 
 - 输出结果
 
 ```aidl
-
+小明,15
+小王,45
+小李,25
+小慧,35
 
 ```
 
-### scan
-- 功能描述:
+
+
+
+### as (table)
+- 功能描述: 给表名取别称
 - scala 程序
 
 ```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.scan
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements(("小明",15,"男"),("小王",45,"男"),("小李",25,"女"),("小慧",35,"女"))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user1",dataSet,'name,'age,'sex)
+
+
+
+    tableEnv.sqlQuery(s"select t1.name,t1.age FROM user1 as t1")
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 小明,15
+      * 小王,45
+      * 小李,25
+      * 小慧,35
+      */
+  }
+
+}
+
 
 ```
 
 - 输出结果
 
 ```aidl
+小明,15
+小王,45
+小李,25
+小慧,35
 
+```
+
+
+
+
+### as (column)
+- 功能描述: 给表名取别称
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.scan
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements(("小明",15,"男"),("小王",45,"男"),("小李",25,"女"),("小慧",35,"女"))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user1",dataSet,'name,'age,'sex)
+
+
+
+    tableEnv.sqlQuery(s"select name a,age as b FROM user1 ")
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 小明,15
+      * 小王,45
+      * 小李,25
+      * 小慧,35
+      */
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+小明,15
+小王,45
+小李,25
+小慧,35
 
 ```
 
@@ -105,6 +269,163 @@ object Run {
 小慧,35
 小李,25
 ```
+
+
+### Where / Filter
+- 功能描述:列加条件过滤表中的数据
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.where
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements(("小明",15,"男"),("小王",45,"男"),("小李",25,"女"),("小慧",35,"女"))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user1",dataSet,'name,'age,'sex)
+
+
+
+    tableEnv.sqlQuery(s"select name,age,sex FROM user1 where sex = '女'")
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      * 
+      * 小李,25,女
+      * 小慧,35,女
+      */
+    
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+
+小李,25,女
+小慧,35,女
+```
+
+
+
+
+
+### between and (where) 
+- 功能描述: 过滤列中的数据,  开始数据  <= data  <= 结束数据
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.whereBetweenAnd
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements(("小明",15,"男"),("小王",45,"男"),("小李",25,"女"),("小慧",35,"女"))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user1",dataSet,'name,'age,'sex)
+
+
+
+    tableEnv.sqlQuery(s"select name,age,sex FROM user1 where age between 20 and  35")
+      .first(100).print()
+
+
+    /**
+      * 结果
+      *
+      * 小李,25,女
+      * 小慧,35,女
+      */
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+小李,25,女
+小慧,35,女
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## DML
@@ -188,6 +509,23 @@ object Run {
 小王,45,男
 小李,25,女
 小慧,35,女
+
+
+```
+
+
+
+### Scan 
+- 功能描述:
+- scala 程序
+
+```aidl
+
+```
+
+- 输出结果
+
+```aidl
 
 
 ```
