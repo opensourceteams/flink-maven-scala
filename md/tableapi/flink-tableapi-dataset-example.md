@@ -571,3 +571,139 @@ c,70
 
 ```
 
+
+
+### distinct 
+- 功能描述:  查询记录去重
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.distinct
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(1,"a",10),(2,"b",20), (3,"c",30) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    //注册table
+    tableEnv.registerTable("user1",table)
+
+
+    //查询table 所有数据
+    tableEnv.scan("user1")
+      //记录去重
+      .distinct()
+
+
+      .first(100)
+
+      //print 输出 (相当于sink)
+      .print()
+
+
+    /**
+      * 输出结果
+      *
+      * 1,a,10
+      * 2,b,20
+      * 3,c,30
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+
+1,a,10
+3,c,30
+2,b,20
+```
+
+
+
+
+### distinct 
+- 功能描述:  sum.distinct ,去掉字段重复的再求和
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.distinct
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run2 {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(1,"a",10),(2,"b",20), (3,"c",30),(20,"b",20) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    //注册table
+    tableEnv.registerTable("user1",table)
+
+
+    //查询table 所有数据
+    tableEnv.scan("user1")
+      //去掉字段重复的再求和
+      .select('_3.sum.distinct)
+
+
+      .first(100)
+
+      //print 输出 (相当于sink)
+      .print()
+
+
+    /**
+      * 输出结果
+      * 60
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+60
+
+```
