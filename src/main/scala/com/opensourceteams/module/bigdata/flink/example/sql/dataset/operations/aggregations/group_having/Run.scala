@@ -28,6 +28,12 @@ object Run {
     tableEnv.sqlQuery(s"select sex,sum(salary) FROM user1 group by sex having sum(salary) >1500")
       .first(100).print()
 
+    /**
+      * 输出结果
+      *
+      *
+      */
+
 
   }
 
