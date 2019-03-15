@@ -13,7 +13,7 @@ object Run {
 
     //得到批环境
     val env = ExecutionEnvironment.getExecutionEnvironment
-    env.setParallelism(2)
+    env.setParallelism(1)
 
 
     val dataSet = env.fromElements(("小明",15,"男"),("小王",45,"男"),("小李",25,"女"),("小慧",35,"女"))
@@ -38,6 +38,15 @@ object Run {
       * 小王,45
       * 小慧,35
       * 小李,25
+      */
+
+    /**
+      * 输出结果 并行度设置为1
+      *
+      * 小王,45
+      * 小慧,35
+      * 小李,25
+      * 小明,15
       */
 
 
