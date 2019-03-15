@@ -5,7 +5,9 @@
 
 ## 概述
 - 本文为Flink sql Dataset 示例 
-- 主要操作包括:
+- 主要操作包括:Scan / Select,as (table),as (column),limit,Where / Filter,between and (where),Sum,min,max,avg,
+sum (group by ),group by having,distinct,INNER JOIN,left join,right join,full outer join,union,unionAll,INTERSECT
+in,EXCEPT,insert into
 
 
 ## SELECT
