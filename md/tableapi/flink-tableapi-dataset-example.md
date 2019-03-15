@@ -271,7 +271,7 @@ object Run {
 
 
 
-### where  (过滤字段,字符串)
+### where / filter  (过滤字段,字符串)
 - 功能描述: 条件过滤
 - scala 程序
 
@@ -344,7 +344,7 @@ object Run {
 
 
 
-### where  (过滤字段,表达式)  
+### where / filter  (过滤字段,表达式)  
 - 功能描述: 过滤数据
 - scala 程序
 
