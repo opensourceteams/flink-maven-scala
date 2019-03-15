@@ -32,7 +32,7 @@ object Run {
 
 
     // create a TableSink
-    val csvSink = new CsvTableSink("src/main/resources/data_output/a.csv",",",1,WriteMode.OVERWRITE);
+    val csvSink = new CsvTableSink("sink-data/csv/a.csv",",",1,WriteMode.OVERWRITE);
     val fieldNames = Array("name", "age", "sex")
     val fieldTypes: Array[TypeInformation[_]] = Array(Types.STRING, Types.INT, Types.STRING)
     tableEnv.registerTableSink("t2",fieldNames,fieldTypes,csvSink)

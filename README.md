@@ -137,7 +137,7 @@ mvn exec:java -Dexec.mainClass=wikiedits.WikipediaAnalysis
     ```
 - Flink 1.7.2 DataStream operator 示例 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/datastream/flink-datastream-operator.md
 - Flink1.7.2  Dataset transformation示例: https://github.com/opensourceteams/flink-maven-scala/blob/master/md/dataset/flink-dataset-transformation.md
-
+- Flink1.7.2 sql 示例 : https://github.com/opensourceteams/flink-maven-scala/blob/master/md/sql/flink-sql-example.md
 
 
 ### Flink1.7.2 DataStream 源码分析(流处理)
