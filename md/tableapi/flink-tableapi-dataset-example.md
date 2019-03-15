@@ -267,3 +267,152 @@ object Run {
 3,c,30
 
 ```
+
+
+
+
+### where  (过滤字段,字符串)
+- 功能描述: 条件过滤
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.where
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30), (4,"c",20) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    //注册table
+    tableEnv.registerTable("user1",table)
+
+
+    //查询table 所有数据
+    tableEnv.scan("user1")
+
+      //重命令字段名称
+      .as('id,'name,'value)
+      //选择需要的字段
+      .select('id,'name,'value)
+      //条件过滤
+      .where("value=20")
+      .where("id=4")
+
+      .first(100)
+
+      //print 输出 (相当于sink)
+      .print()
+
+
+    /**
+      * 输出结果
+      *
+      * 1,a,10
+      * 2,b,20
+      * 3,c,30
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+4,c,20
+
+```
+
+
+
+### where  (过滤字段,表达式)  
+- 功能描述: 过滤数据
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.where
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run2 {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30), (4,"c",20) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    //注册table
+    tableEnv.registerTable("user1",table)
+
+
+    //查询table 所有数据
+    tableEnv.scan("user1")
+
+      //重命令字段名称
+      .as('id,'name,'value)
+      //选择需要的字段
+      .select('id,'name,'value)
+      //条件过滤
+      .where('value === 20)
+      .where('id === 4)
+
+
+      .first(100)
+
+      //print 输出 (相当于sink)
+      .print()
+
+
+    /**
+      * 输出结果
+      *
+      * 1,a,10
+      * 2,b,20
+      * 3,c,30
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+4,c,20
+
+```
