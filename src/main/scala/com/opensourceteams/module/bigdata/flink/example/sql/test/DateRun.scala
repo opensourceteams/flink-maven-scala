@@ -7,7 +7,7 @@ import org.apache.flink.table.api.scala._
 import org.apache.flink.api.scala._
 import org.apache.flink.table.api.TableEnvironment
 
-object Run {
+object DateRun {
 
 
 
@@ -21,8 +21,8 @@ object Run {
     val dataSet = env.fromElements(
       ("小明",15,"男",Date.valueOf("2000-03-01")),
       ("小王",45,"男",Date.valueOf("2000-04-01")),
-      ("小李",25,"女",Date.valueOf("2000-05-01")),
-      ("小慧",35,"女",Date.valueOf("2000-06-01")))
+      ("小李",25,"女",Date.valueOf("2019-03-12")),
+      ("小慧",35,"女",Date.valueOf("2019-03-15")))
 
     //得到Table环境
     val tableEnv = TableEnvironment.getTableEnvironment(env)
@@ -31,7 +31,7 @@ object Run {
 
 
 
-    tableEnv.sqlQuery(s"select u.name,u.age,u.sex,u.birthday FROM `user` as u   ")
+    tableEnv.sqlQuery(s"select u.name,u.age,u.sex,u.birthday FROM `user` as u  where u.birthday BETWEEN u.birthday - INTERVAL '4' DAY AND u.birthday   ")
       .first(100).print()
 
 
