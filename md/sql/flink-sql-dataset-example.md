@@ -3,9 +3,12 @@
 ## 源码
 - https://github.com/opensourceteams/flink-maven-scala
 
+## 概述
+- 本文为Flink sql Dataset 示例 
+- 主要操作包括:
+
+
 ## SELECT
-
-
 
 ### Scan / Select
 - 功能描述: 查询一个表中的所有数据
@@ -1038,10 +1041,388 @@ null,null,null,null,null,外语,90
 ```
 
 
+## Set Operations
+
+
+### union 
+- 功能描述: 连接两个表中的数据，会去重
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.setOperations.union
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(3,"小李",25,"女",800),(4,"小慧",35,"女",500))
+    val dataSet2 = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(30,"小李",25,"女",800),(40,"小慧",35,"女",500))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user",dataSet,'id,'name,'age,'sex,'salary)
+    tableEnv.registerDataSet("t2",dataSet2,'id,'name,'age,'sex,'salary)
+
+
+    /**
+      *  union 连接两个表,会去重
+      */
+    tableEnv.sqlQuery(
+      "select * from ("
+                +"select t1.* FROM `user` as t1 ) " +
+                + " UNION "
+                + " ( select t2.* FROM t2 )"
+
+
+
+       )
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 30,小李,25,女,800
+      * 40,小慧,35,女,500
+      * 2,小王,45,男,4000
+      * 4,小慧,35,女,500
+      * 3,小李,25,女,800
+      * 1,小明,15,男,1500
+      *
+      */
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+30,小李,25,女,800
+40,小慧,35,女,500
+2,小王,45,男,4000
+4,小慧,35,女,500
+3,小李,25,女,800
+1,小明,15,男,1500
+
+```
+
+
+
+### unionAll 
+- 功能描述: 连接两表中的数据，不会去重
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.setOperations.unionAll
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(3,"小李",25,"女",800),(4,"小慧",35,"女",500))
+    val dataSet2 = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(30,"小李",25,"女",800),(40,"小慧",35,"女",500))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user",dataSet,'id,'name,'age,'sex,'salary)
+    tableEnv.registerDataSet("t2",dataSet2,'id,'name,'age,'sex,'salary)
+
+
+    /**
+      *  union 连接两个表,不会去重
+      */
+    tableEnv.sqlQuery(
+      "select * from ("
+                +"select t1.* FROM `user` as t1 ) " +
+                + " UNION ALL "
+                + " ( select t2.* FROM t2 )"
+
+
+
+       )
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 1,小明,15,男,1500
+      * 2,小王,45,男,4000
+      * 3,小李,25,女,800
+      * 4,小慧,35,女,500
+      * 1,小明,15,男,1500
+      * 2,小王,45,男,4000
+      * 30,小李,25,女,800
+      * 40,小慧,35,女,500
+      *
+      */
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+1,小明,15,男,1500
+2,小王,45,男,4000
+3,小李,25,女,800
+4,小慧,35,女,500
+1,小明,15,男,1500
+2,小王,45,男,4000
+30,小李,25,女,800
+40,小慧,35,女,500
+
+```
 
 
 
 
+### INTERSECT 
+- 功能描述: INTERSECT 连接两个表,找相同的数据(相交的数据，重叠的数据)
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.setOperations.intersect
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(3,"小李",25,"女",800),(4,"小慧",35,"女",500))
+    val dataSet2 = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(30,"小李",25,"女",800),(40,"小慧",35,"女",500))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user",dataSet,'id,'name,'age,'sex,'salary)
+    tableEnv.registerDataSet("t2",dataSet2,'id,'name,'age,'sex,'salary)
+
+
+    /**
+      *  INTERSECT 连接两个表,找相同的数据(相交的数据，重叠的数据)
+      */
+    tableEnv.sqlQuery(
+      "select * from ("
+                +"select t1.* FROM `user` as t1 ) " +
+                + " INTERSECT "
+                + " ( select t2.* FROM t2 )"
+
+
+
+       )
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 1,小明,15,男,1500
+      * 2,小王,45,男,4000
+      *
+      */
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+ 1,小明,15,男,1500
+ 2,小王,45,男,4000
+
+```
+
+
+
+### in 
+- 功能描述:  子查询
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.setOperations.in
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(3,"小李",25,"女",800),(4,"小慧",35,"女",500))
+    val dataSet2 = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(30,"小李",25,"女",800),(40,"小慧",35,"女",500))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user",dataSet,'id,'name,'age,'sex,'salary)
+    tableEnv.registerDataSet("t2",dataSet2,'id,'name,'age,'sex,'salary)
+
+
+    /**
+      *  in ,子查询
+      */
+    tableEnv.sqlQuery(
+
+                "select t1.* FROM `user` t1  where t1.id in " +
+                        " (select t2.id from t2) "
+
+
+
+
+       )
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 1,小明,15,男,1500
+      * 2,小王,45,男,4000
+      *
+      */
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+ 1,小明,15,男,1500
+ 2,小王,45,男,4000
+
+```
+
+
+### EXCEPT 
+- 功能描述: EXCEPT 连接两个表,找不相同的数据(不相交的数据，不重叠的数据)
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.setOperations.except
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+
+  def main(args: Array[String]): Unit = {
+
+
+    //得到批环境
+    val env = ExecutionEnvironment.getExecutionEnvironment
+
+
+    val dataSet = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(3,"小李",25,"女",800),(4,"小慧",35,"女",500))
+    val dataSet2 = env.fromElements((1,"小明",15,"男",1500),(2,"小王",45,"男",4000),(30,"小李",25,"女",800),(40,"小慧",35,"女",500))
+
+    //得到Table环境
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+    //注册table
+    tableEnv.registerDataSet("user",dataSet,'id,'name,'age,'sex,'salary)
+    tableEnv.registerDataSet("t2",dataSet2,'id,'name,'age,'sex,'salary)
+
+
+    /**
+      *  EXCEPT 连接两个表,找不相同的数据(不相交的数据，不重叠的数据)
+      */
+    tableEnv.sqlQuery(
+      "select * from ("
+                +"select t1.* FROM `user` as t1 ) " +
+                + " EXCEPT "
+                + " ( select t2.* FROM t2 )"
+
+
+
+       )
+      .first(100).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 3,小李,25,女,800
+      * 4,小慧,35,女,500
+      *
+      */
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+ 3,小李,25,女,800
+ 4,小慧,35,女,500
+
+```
 
 
 
