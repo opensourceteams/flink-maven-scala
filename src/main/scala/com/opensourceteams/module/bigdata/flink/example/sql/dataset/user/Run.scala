@@ -1,4 +1,4 @@
-package com.opensourceteams.module.bigdata.flink.example.sql.user
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.user
 
 import org.apache.flink.api.scala.{ExecutionEnvironment, _}
 import org.apache.flink.table.api.TableEnvironment
@@ -24,7 +24,10 @@ object Run {
 
 
 
-    //系统保留的关键字，是需要加  `    来使用
+    /**
+      * 系统保留的关键字，是需要加  `    来使用
+      *  some string combinations are already reserved as keywords for future use. If you want to use one of the following strings as a field name, make sure to surround them with backticks (e.g. `value`, `count`).
+      */
     tableEnv.sqlQuery(s"select name,age FROM `user` ")
       .first(100).print()
 

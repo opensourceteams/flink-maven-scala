@@ -1,4 +1,4 @@
-package com.opensourceteams.module.bigdata.flink.example.sql.user
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.select
 
 import org.apache.flink.api.scala.{ExecutionEnvironment, _}
 import org.apache.flink.table.api.TableEnvironment
@@ -15,17 +15,16 @@ object Run {
     val env = ExecutionEnvironment.getExecutionEnvironment
 
 
-    val dataSet = env.fromElements(("小明",15,"男"),("小李",25,"女"))
+    val dataSet = env.fromElements(("小明",15,"男"),("小王",45,"男"),("小李",25,"女"),("小慧",35,"女"))
 
     //得到Table环境
     val tableEnv = TableEnvironment.getTableEnvironment(env)
     //注册table
-    tableEnv.registerDataSet("user",dataSet,'name,'age,'sex)
+    tableEnv.registerDataSet("user1",dataSet,'name,'age,'sex)
 
 
 
-    //系统保留的关键字，是需要加  `    来使用
-    tableEnv.sqlQuery(s"select name,age FROM `user` ")
+    tableEnv.sqlQuery(s"select name,age FROM user1")
       .first(100).print()
 
 

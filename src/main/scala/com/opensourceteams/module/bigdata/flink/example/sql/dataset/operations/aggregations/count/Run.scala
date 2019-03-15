@@ -1,4 +1,4 @@
-package com.opensourceteams.module.bigdata.flink.example.sql.user
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.aggregations.count
 
 import org.apache.flink.api.scala.{ExecutionEnvironment, _}
 import org.apache.flink.table.api.TableEnvironment
@@ -15,19 +15,24 @@ object Run {
     val env = ExecutionEnvironment.getExecutionEnvironment
 
 
-    val dataSet = env.fromElements(("小明",15,"男"),("小李",25,"女"))
+    val dataSet = env.fromElements(("小明",15,"男",1500),("小王",45,"男",4000),("小李",25,"女",800),("小慧",35,"女",500))
 
     //得到Table环境
     val tableEnv = TableEnvironment.getTableEnvironment(env)
     //注册table
-    tableEnv.registerDataSet("user",dataSet,'name,'age,'sex)
+    tableEnv.registerDataSet("user1",dataSet,'name,'age,'sex,'salary)
 
 
 
-    //系统保留的关键字，是需要加  `    来使用
-    tableEnv.sqlQuery(s"select name,age FROM `user` ")
+    //汇总所有数据
+    tableEnv.sqlQuery(s"select count(0) FROM user1")
       .first(100).print()
 
+    /**
+      * 输出结果
+      *
+      * 4
+      */
 
   }
 

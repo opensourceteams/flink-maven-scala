@@ -1,9 +1,8 @@
-package com.opensourceteams.module.bigdata.flink.example.tableapi.test
+package com.opensourceteams.module.bigdata.flink.example.sql.dataset.operations.whereBetweenAnd
 
-import org.apache.flink.api.scala.ExecutionEnvironment
-import org.apache.flink.table.api.scala._
-import org.apache.flink.api.scala._
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
 import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
 
 object Run {
 
@@ -25,9 +24,16 @@ object Run {
 
 
 
-    tableEnv.sqlQuery(s"select name,age,sex FROM user1 where sex = '女'")
+    tableEnv.sqlQuery(s"select name,age,sex FROM user1 where age between 20 and  35")
       .first(100).print()
 
+
+    /**
+      * 结果
+      *
+      * 小李,25,女
+      * 小慧,35,女
+      */
 
   }
 
