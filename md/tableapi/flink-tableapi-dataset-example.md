@@ -1360,3 +1360,71 @@ object Run {
 
 
 
+### in 
+- 功能描述:表和子表的关系,子查询只能由一列组成，
+   表的查询条件的列类型需要和子查询保持一致,
+   如果子查询中的值在表中存在就返回真，这个元素就满足条件可以被返回来
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.in
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+    val dataSet2 = env.fromElements( (1,"a",100),(20,"b",20), (30,"c",30) )
+
+
+
+    //列不能重复
+    val table = tableEnv.fromDataSet(dataSet,'a,'b,'c)
+    val table2 = tableEnv.fromDataSet(dataSet2,'d)
+
+
+    /**
+      * 表和子表的关系
+      * 子查询只能由一列组成，表的查询条件的列类型需要和子查询保持一致
+      * 如果子查询中的值在表中存在就返回真，这个元素就满足条件可以被返回来
+      */
+   table.where('a.in(table2))
+
+      .first(1000).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 1,a,10
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+
+1,a,10
+```
+
+
+
+
+
