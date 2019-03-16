@@ -1428,3 +1428,227 @@ object Run {
 
 
 
+
+
+### orderBy  
+- 功能描述: 按指定列的升序或降序排序(是按分区来排序的)
+- 经测试只能按一列进行排骗子
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.orderBy
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    env.setParallelism(1)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20) ,(20,"f",200),(3,"c",30) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    //注册table
+    tableEnv.registerTable("user1",table)
+
+
+    //查询table 所有数据
+    tableEnv.scan("user1").as('id,'name,'value1)
+      //.orderBy('id.asc)  //按id列，升序排序(注意是按分区来排序)
+      .orderBy('id.desc)
+      //.orderBy('value1.asc)
+
+      .first(1000)
+
+      //print 输出 (相当于sink)
+      .print()
+
+
+    /**
+      * 输出结果
+      * 
+      * 20,f,200
+      * 3,c,30
+      * 2,b,20
+      * 1,a,10
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+20,f,200
+3,c,30
+2,b,20
+1,a,10
+
+```
+
+
+
+### fetch 
+- 功能描述: 先进行排序后，取前几个元素
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.fetch
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    env.setParallelism(1)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20) ,(20,"f",200),(3,"c",30) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    //注册table
+    tableEnv.registerTable("user1",table)
+
+
+    //查询table 所有数据
+    tableEnv.scan("user1").as('id,'name,'value1)
+      //.orderBy('id.asc)  //按id列，升序排序(注意是按分区来排序)
+       .orderBy('id.desc)
+
+      .fetch(2)  //只有有序的才能用，只取了2个元素
+
+      .first(1000)
+      //print 输出 (相当于sink)
+      .print()
+
+
+    /**
+      * 输出结果
+      *
+      * 20,f,200
+      * 3,c,30
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+20,f,200
+3,c,30
+
+```
+
+
+
+
+### offset 
+- 功能描述: 只有有序的才能用，偏移了2个元素
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.offset
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    env.setParallelism(1)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20) ,(20,"f",200),(3,"c",30) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+    //注册table
+    tableEnv.registerTable("user1",table)
+
+
+    //查询table 所有数据
+    tableEnv.scan("user1").as('id,'name,'value1)
+      //.orderBy('id.asc)  //按id列，升序排序(注意是按分区来排序)
+       .orderBy('id.desc)
+
+      .offset(2)  //只有有序的才能用，偏移了2个元素
+
+      .first(1000)
+      //print 输出 (相当于sink)
+      .print()
+
+
+    /**
+      * 输出结果
+      *
+      * 2,b,20
+      * 1,a,10
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+2,b,20
+1,a,10
+
+```
+
+
+
+
+
+
