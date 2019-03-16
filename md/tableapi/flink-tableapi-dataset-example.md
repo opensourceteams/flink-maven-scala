@@ -949,3 +949,148 @@ null,null,null,30,c
 
 
 
+
+
+### union 
+- 功能描述: 两个表串连，取并集(会去重)
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.union
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+    val dataSet2 = env.fromElements( (1,"a",100),(2,"b",20),(20,"b",20), (30,"c",30) )
+
+
+
+    //列不能重复
+    val table = tableEnv.fromDataSet(dataSet,'a,'b,'c)
+    val table2 = tableEnv.fromDataSet(dataSet2,'d,'e,'f)
+
+
+
+   table.union(table2).first(1000).print()
+
+    /**
+      * 输出结果
+      *
+      * 30,c,30
+      * 1,a,100
+      * 2,b,20
+      * 20,b,20
+      * 1,a,10
+      * 3,c,30
+      */
+
+
+
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+30,c,30
+1,a,100
+2,b,20
+20,b,20
+1,a,10
+3,c,30
+
+```
+
+
+
+
+
+### unionAll  两个表串连，取并集(不会去重)
+- 功能描述:
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.unionAll
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+    val dataSet2 = env.fromElements( (1,"a",100),(2,"b",20),(20,"b",20), (30,"c",30) )
+
+
+
+    //列不能重复
+    val table = tableEnv.fromDataSet(dataSet,'a,'b,'c)
+    val table2 = tableEnv.fromDataSet(dataSet2,'d,'e,'f)
+
+
+
+   table.unionAll(table2).first(1000).print()
+
+    /**
+      * 输出结果
+      *
+      * 30,c,30
+      * 1,a,100
+      * 2,b,20
+      * 20,b,20
+      * 1,a,10
+      * 3,c,30
+      */
+
+
+
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+1,a,10
+2,b,20
+3,c,30
+1,a,100
+2,b,20
+20,b,20
+30,c,30
+
+```
+
+
+
