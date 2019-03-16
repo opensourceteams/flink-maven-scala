@@ -818,3 +818,134 @@ object Run {
 1,a,10,1,a,100
 
 ```
+
+
+
+
+
+
+### leftOuterJoin   
+- 功能描述:  左外连接，用左表中的每一个元素，去连接右表中的元素，如果右表中存在，就匹配值，如呆不存在就为空值
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.leftOuterJoin
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+    val dataSet2 = env.fromElements( (1,"a",100),(20,"b",20), (30,"c",30) )
+
+
+
+    //列不能重复
+    val table = tableEnv.fromDataSet(dataSet,'a,'b,'c)
+    val table2 = tableEnv.fromDataSet(dataSet2,'d,'e,'f)
+
+
+
+   //table.leftOuterJoin(table2,"a=d").first(1000).print()
+   table.leftOuterJoin(table2,'a === 'd).first(1000).print()
+
+
+    /**
+      * 输出结果
+      *
+      * 2,b,20,null,null,null
+      * 1,a,10,1,a,100
+      * 3,c,30,null,null,null
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+1,a,10,1,a,100
+2,b,20,null,null,null
+3,c,30,null,null,null
+
+```
+
+
+
+### rightOuterJoin 
+- 功能描述: 右外连接，用右表中的每一个元素，去连接左表中的元素，如果左表中存在，就匹配值，如呆不存在就为空值
+- scala 程序
+
+```aidl
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.rightOuterJoin
+
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.table.api.TableEnvironment
+import org.apache.flink.table.api.scala._
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+    val dataSet2 = env.fromElements( (1,"a",100),(20,"b",20), (30,"c",30) )
+
+
+
+    //列不能重复
+    val table = tableEnv.fromDataSet(dataSet,'a,'b,'c)
+    val table2 = tableEnv.fromDataSet(dataSet2,'d,'e,'f)
+
+
+
+   table.rightOuterJoin(table2,"a = d").first(1000).print()
+
+
+    /**
+      * 输出结果
+      *
+      *
+      * null,null,null,20,b,20
+      * null,null,null,30,c,30
+      * 1,a,10,1,a,100
+      */
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl
+null,null,null,20,b
+null,null,null,30,c
+1,a,10,1,a,100
+
+```
+
+
+
