@@ -1650,5 +1650,152 @@ object Run {
 
 
 
+### Sink csv  
+- 功能描述:
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.sink.csv
+
+import org.apache.flink.api.common.typeinfo.TypeInformation
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.core.fs.FileSystem.WriteMode
+import org.apache.flink.table.api.{TableEnvironment, Types}
+import org.apache.flink.table.sinks.CsvTableSink
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+
+    val cvsTableSink = new CsvTableSink("sink-data/csv/a.csv",
+      ",",
+      1,
+      WriteMode.OVERWRITE
+        )
+
+    val fieldNames: Array[String] = Array("id", "name", "value")
+    val fieldTypes: Array[TypeInformation[_]] = Array(Types.INT, Types.STRING, Types.INT)
+
+
+    tableEnv.registerTableSink("cvsTableSink",fieldNames,fieldTypes,cvsTableSink)
+
+    table.insertInto("cvsTableSink")
+
+
+    env.execute()
+
+
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+
+```aidl a.csv
+1,a,10
+2,b,20
+3,c,30
+
+
+```
+
+
+
+
+### insert 
+- 功能描述: 往一个表中插入数据，相当于sink
+- scala 程序
+
+```aidl
+
+package com.opensourceteams.module.bigdata.flink.example.tableapi.operation.insert
+
+import org.apache.flink.api.common.typeinfo.TypeInformation
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
+import org.apache.flink.core.fs.FileSystem.WriteMode
+import org.apache.flink.table.api.{TableEnvironment, Types}
+import org.apache.flink.table.api.scala._
+import org.apache.flink.table.sinks.CsvTableSink
+
+object Run {
+
+
+  def main(args: Array[String]): Unit = {
+
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = TableEnvironment.getTableEnvironment(env)
+
+    val dataSet = env.fromElements( (1,"a",10),(2,"b",20), (3,"c",30) )
+
+
+
+    //从dataset转化为 table
+    val table = tableEnv.fromDataSet(dataSet)
+
+
+    val cvsTableSink = new CsvTableSink("/opt/n_001_workspaces/bigdata/flink/flink-maven-scala-2/sink-data/csv/a.csv",
+      ",",
+      1,
+      WriteMode.OVERWRITE
+        )
+
+    val fieldNames: Array[String] = Array("id", "name", "value")
+    val fieldTypes: Array[TypeInformation[_]] = Array(Types.INT, Types.STRING, Types.INT)
+
+
+    tableEnv.registerTableSink("cvsTableSink",fieldNames,fieldTypes,cvsTableSink)
+
+    table.insertInto("cvsTableSink")
+
+
+    env.execute()
+
+
+
+
+
+  }
+
+}
+
+
+```
+
+- 输出结果
+- a.csv
+
+```aidl
+1,a,10
+2,b,20
+3,c,30
+
+
+```
+
+
+
+
+
+
+
 
 
