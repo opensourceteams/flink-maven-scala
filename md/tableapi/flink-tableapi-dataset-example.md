@@ -1,5 +1,14 @@
 # flink1.7.2 tableapi批处理示例
 
+## 源码
+- https://github.com/opensourceteams/flink-maven-scala
+
+## 概述
+- 本文为flink1.7.2 tableapi批处理示例 
+- 主要操作包括: print table,DataSet 转换成table,Scan,select,as,where / filter,groupBy,distinct,join,leftOuterJoin,rightOuterJoin
+              union,unionAll,intersect,intersectAll,minus,minusAll,in,orderBy,fetch,offset,Sink csv,insert
+
+
 ### print table 
 - 功能描述: 打印输出表数据
 - scala 程序
